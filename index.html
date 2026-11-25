@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Praxis-Intranet</title>
+<style>
+:root{--bg:#f2f5f7;--card:#fff;--ink:#1c2a33;--mute:#587080;--line:#dbe4ea;--pet:#0e7490;--petd:#0a566b;--petl:#e0f1f5;--warn:#9a4a05;--warnl:#fff3dc;--warnb:#eeb25a}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 "Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+header{background:var(--pet);color:#fff;padding:12px 24px;display:flex;gap:24px;align-items:center;position:sticky;top:0;z-index:5}
+h1{font-size:19px;font-weight:600;margin:0;white-space:nowrap}
+.sb{position:relative;flex:1;max-width:720px}
+.sb input{width:100%;padding:10px 74px 10px 40px;border:2px solid transparent;border-radius:8px;font:inherit;color:var(--ink)}
+.sb input:focus{outline:none;border-color:#9fdbe9}
+.sb svg{position:absolute;left:12px;top:12px;width:18px;height:18px;color:var(--mute)}
+.sb kbd{position:absolute;right:10px;top:9px;font:12px "Segoe UI",sans-serif;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:1px 7px;color:var(--mute)}
+#hr{margin-left:auto;text-align:right;font-size:13px;line-height:1.3;white-space:nowrap}
+#sync{opacity:.9}
+.app{display:flex;gap:22px;max-width:1560px;margin:0 auto;padding:20px 24px 48px;align-items:flex-start}
+aside{width:250px;flex:none;position:sticky;top:76px;max-height:calc(100vh - 96px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px}
+aside button{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;font:inherit;color:var(--ink);background:none;border:0;border-left:3px solid transparent;border-radius:6px;padding:7px 10px;cursor:pointer}
+aside button:hover{background:var(--bg)}
+aside button.on{background:var(--petl);border-left-color:var(--pet);color:var(--petd);font-weight:600}
+aside i{font-style:normal;font-size:12px;background:var(--petl);color:var(--petd);border-radius:10px;padding:0 8px}
+aside i.z{background:#eef1f3;color:#8fa0aa}
+.g{font-size:13px;font-weight:700;color:var(--petd);padding:14px 10px 4px;border-top:1px solid var(--line);margin-top:8px}
+.g:first-of-type{border:0;margin:0}
+main{flex:1;min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+h2{font-size:17px;margin:0;font-weight:600}
+h3{font-size:14px;margin:22px 0 8px;font-weight:600;color:var(--petd)}
+.hd2{display:flex;gap:14px;align-items:baseline;margin-bottom:12px;flex-wrap:wrap}
+.hd2 span{font-size:12px;color:var(--mute)}
+.hd2 .sp{margin-left:auto}
+.alert{margin-bottom:14px;display:grid;gap:8px}
+.al,.nw{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:8px;background:var(--bg)}
+.al,.nw.w{background:var(--warnl);border:1px solid var(--warnb);color:var(--warn);font-weight:600}
+.al svg,.nw svg{margin-top:4px}
+.nws{display:grid;gap:8px;margin-top:10px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.tile{font:inherit;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:var(--ink)}
+.tile:hover{border-color:var(--pet);background:var(--petl)}
+.tile b{color:var(--petd)}
+.tile span{font-size:13px;color:var(--mute)}
+.tile em{font-style:normal;font-size:12px;color:var(--mute)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-size:13px;color:var(--mute);font-weight:600;padding:8px 12px;border-bottom:2px solid var(--line);white-space:nowrap;position:sticky;top:0;background:#fff}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;white-space:pre-line}
+td:first-child{font-weight:600}
+tbody tr:hover{background:#f7fafb}
+tr[id]{scroll-margin-top:90px}
+mark{background:#ffe9a8;color:inherit;border-radius:3px;padding:0 1px}
+.chips{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 12px}
+.chip{font:inherit;font-size:13px;font-weight:600;color:var(--petd);background:var(--petl);border:0;border-radius:6px;min-width:30px;padding:2px 8px;cursor:pointer}
+.chip:hover{background:#c9e6ee}
+.cp{font:inherit;font-weight:700;color:var(--petd);background:var(--petl);border:1px solid transparent;border-radius:6px;padding:2px 9px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.cp:hover{border-color:var(--pet)}
+.cp svg{width:13px;height:13px;opacity:.6}
+.od{color:var(--warn);font-weight:600}
+.none{color:var(--mute);padding:4px 2px;margin:4px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:1100px){.app{flex-direction:column}aside{position:static;width:100%;max-height:none}.grid{grid-template-columns:1fr}}
+label{display:block;font-size:13px;color:var(--mute);margin:10px 0 4px}
+.f{font:inherit;padding:8px 10px;border:1px solid #b9c8d1;border-radius:6px;width:100%;max-width:300px;background:#fff;color:var(--ink)}
+.f:focus,td textarea:focus,td input:focus{outline:2px solid #9fdbe9;border-color:var(--pet)}
+td textarea,td input:not([type]),td input[type=date]{width:100%;min-width:130px;font:inherit;font-weight:400;padding:5px 7px;border:1px solid #b9c8d1;border-radius:6px;resize:vertical;white-space:pre-wrap}
+.res{margin-top:14px;padding:12px 14px;background:var(--petl);border-radius:8px}
+.res p{margin:4px 0}
+.note{font-size:13px;color:var(--warn);background:var(--warnl);border:1px solid var(--warnb);border-radius:6px;padding:6px 10px;margin:0 0 12px}
+.big{font-size:20px;font-weight:600;color:var(--petd)}
+a{color:var(--pet)}
+.btn{font:inherit;font-size:13px;font-weight:600;color:var(--petd);background:#fff;border:1px solid #b9c8d1;border-radius:6px;padding:4px 12px;cursor:pointer;display:inline-block}
+.btn:hover{border-color:var(--pet);background:var(--petl)}
+.log{font-size:13px;color:var(--mute);margin:0;padding-left:18px}
+.rs{margin-bottom:26px}
+.ic{display:inline-flex;width:20px;height:20px;align-items:center;justify-content:center;margin-right:8px;font-size:16px;vertical-align:middle}
+.ic img{width:20px;height:20px;object-fit:contain}
+.tile b .ic{width:24px;height:24px;font-size:19px}.tile b .ic img{width:24px;height:24px}
+.src{font-size:12px;color:var(--mute);margin-top:2px;font-weight:400}
+.fo{font:12px/1.4 Consolas,"Courier New",monospace;color:var(--mute);margin:0 0 6px}
+#logo img{height:32px;background:#fff;border-radius:6px;padding:2px;display:block}
+.plogo{max-height:60px;margin-bottom:10px;display:block}
+.ov{position:fixed;inset:0;background:#0a2a3366;display:flex;align-items:center;justify-content:center;z-index:20}
+.dlg{background:#fff;border-radius:10px;padding:20px 22px;width:min(700px,94vw);max-height:90vh;overflow:auto}
+.dlg .f{max-width:none}.dlg textarea.f{resize:vertical}
+.nr{display:flex;gap:10px;align-items:center;margin-bottom:8px}.nr label{margin:0;white-space:nowrap}
+.pen{font:inherit;font-size:13px;color:var(--petd);background:#fff;border:1px solid #b9c8d1;border-radius:6px;cursor:pointer;margin-left:6px;padding:0 6px}
+.pen:hover{border-color:var(--pet);background:var(--petl)}
+.fbar{display:flex;gap:10px;margin:0 0 12px;flex-wrap:wrap}.fbar .f{max-width:340px}
+details{margin:0 0 12px}summary{cursor:pointer;padding:6px 2px;color:var(--petd)}
+aside button.navt{justify-content:center;font-size:18px;color:var(--petd)}
+.ini{display:none}
+body.navc aside{width:64px}body.navc aside .tx,body.navc .g,body.navc aside i{display:none}body.navc aside button{justify-content:center;padding:7px 4px}body.navc .ini{display:inline-flex}body.navc .ic{margin-right:0}
+.fsb{font:inherit;font-size:12px;background:#ffffff22;color:#fff;border:1px solid #ffffff66;border-radius:4px;cursor:pointer;padding:0 6px}
+.dlg h3{margin-top:18px}.dlg label{display:block}.dlg .btn{margin-top:2px}
+.sopr{display:flex;gap:12px;align-items:baseline;width:100%;text-align:left;font:inherit;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--line);padding:9px 10px;cursor:pointer}
+.sopr:hover{background:#f7fafb}.sopr b{color:var(--petd);margin-right:auto}
+ol.steps{padding-left:24px}ol.steps li{margin:0 0 18px;padding-left:4px}ol.steps li::marker{font-weight:700;color:var(--petd)}
+.simg{max-width:440px;max-height:320px;border:1px solid var(--line);border-radius:8px;margin-top:8px;display:block}
+.chk label{display:flex;gap:10px;align-items:flex-start;margin:7px 0;font-size:15px;color:var(--ink)}.chk input{width:18px;height:18px;margin-top:3px}
+ol.steps .nw{margin-top:8px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--petd);color:#fff;padding:9px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .15s}
+#toast.on{opacity:1}
+button:focus-visible,a:focus-visible{outline:3px solid #7cc7d9;outline-offset:2px}
+@media print{header,aside,.alert,.btn,.chips,#toast{display:none}body{background:#fff}.card{border:0}.app{display:block;padding:0}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-s" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+<symbol id="i-c" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></symbol>
+<symbol id="i-w" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
+<symbol id="i-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+</defs></svg>
+<header>
+  <div id="logo"></div><h1>Praxis-Intranet</h1>
+  <div class="sb"><svg><use href="#i-s"/></svg><input id="q" type="search" placeholder="Alles durchsuchen: Erkrankung, Medikament, Ziffer, Kürzel, Dokument …" autocomplete="off" aria-label="Globale Suche"><kbd>Strg + K</kbd></div>
+  <div id="hr"><div id="clock"></div><div id="sync"></div><div><button class="fsb" data-fz="-1" title="Schrift kleiner">A−</button> <button class="fsb" data-fz="1" title="Schrift größer">A+</button></div></div>
+</header>
+<div class="app">
+  <aside id="nav"></aside>
+  <main><div id="alert" class="alert"></div><section id="view" class="card">Wird geladen …</section></main>
+</div>
+<div id="toast" role="status"></div>
+<script src="config.js"></script>
+<script src="neuigkeiten.js"></script>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())};
+const inDays=n=>{const d=new Date();d.setDate(d.getDate()+n);const p=x=>String(x).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())};
+const dt=d=>d.toLocaleDateString('de-DE');
+const nf=v=>parseFloat(String(v).replace(',','.'));
+const fm=x=>x>=100?Math.round(x).toLocaleString('de-DE'):x.toFixed(x<1?2:1).replace('.',',');
+const rg=a=>Math.abs(a[0]-a[1])<1e-9?fm(a[0]):fm(a[0])+'–'+fm(a[1]);
+const fmtN=v=>{const n=nf(v);return isNaN(n)?v:n.toLocaleString('de-DE')};
+const ico=n=>`<svg><use href="#i-${n}"/></svg>`;
+let CFG,CENTRAL,EDIT=false,DBASE='',LATEST='',TAB='start',Q='',SEC='medis',NEWS=[],NEWSALL=[],NEWSAT='';
+const USE=(()=>{try{return JSON.parse(localStorage.getItem('pi_use'))||{}}catch(e){return{}}})();
+
+/* U-Untersuchungen: Zeitfenster in Lebenstagen (Näherung) */
+const wo=(a,b)=>[(a-1)*7+1,b*7],mo=(a,b)=>[Math.round((a-1)*30.4375)+1,Math.round(b*30.4375)],ja=(a,b)=>[Math.round(a*365.25),Math.round((b+1)*365.25)-1];
+const UU=[['U2','3.–10. Lebenstag',[3,10],[3,14]],['U3','4.–5. Lebenswoche',wo(4,5),wo(3,8)],['U4','3.–4. Lebensmonat',mo(3,4),[mo(2,2)[0],137]],['U5','6.–7. Lebensmonat',mo(6,7),mo(5,8)],['U6','10.–12. Lebensmonat',mo(10,12),mo(9,14)],['U7','21.–24. Lebensmonat',mo(21,24),mo(20,27)],['U7a','34.–36. Lebensmonat',mo(34,36),mo(33,38)],['U8','46.–48. Lebensmonat',mo(46,48),mo(43,50)],['U9','60.–64. Lebensmonat',mo(60,64),mo(58,66)],['U10','7.–8. Lebensjahr',ja(7,8),ja(7,8)],['U11','9.–10. Lebensjahr',ja(9,10),ja(9,10)],['J1','12.–14. Lebensjahr',ja(12,14),ja(12,14)],['J2','16.–17. Lebensjahr',ja(16,17),ja(16,17)]];
+
+/* ----- Konfiguration: zentral (config.js) und Entwurf (nur im Bearbeitungsmodus) ----- */
+const clone=o=>JSON.parse(JSON.stringify(o));
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+function setSync(){$('#sync').textContent=EDIT?'● Entwurf, nicht veröffentlicht':'Inhalte vom '+(CFG.published?new Date(CFG.published).toLocaleString('de-DE',{dateStyle:'short',timeStyle:'short'}):'–')}
+function persist(){if(EDIT)ls.set('pi_draft',JSON.stringify({base:DBASE,cfg:CFG}))}
+function logSave(s,a){if(!EDIT)return;CFG.log.unshift({t:Date.now(),s,a,u:ls.get('pi_user')||''});CFG.log.length=Math.min(CFG.log.length,100);persist()}
+const touch=(s,a)=>{s.upd=today();logSave(s.title,a)};
+const loadJS=src=>new Promise(res=>{const e=document.createElement('script');e.src=src+'?t='+Date.now();e.onload=()=>{e.remove();res(1)};e.onerror=()=>{e.remove();res(0)};document.head.appendChild(e)});
+async function checkUpdate(){await loadJS('config.js');const v=window.PI_CONFIG&&window.PI_CONFIG.version;LATEST=v&&v!==CENTRAL.version?v:'';renderAlert()}
+const stamp=()=>{const d=new Date(),p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes())};
+const hashPin=x=>{let h=5381;for(const ch of x)h=((h<<5)+h+ch.charCodeAt(0))|0;return String(h)};
+async function prune(r){try{const d=await dirAt(r,'archiv'),n=[];for await(const[k]of d.entries())if(/^config_.*\.js$/.test(k))n.push(k);n.sort();while(n.length>30)await d.removeEntry(n.shift())}catch(e){}}
+async function publish(){
+  if((CENTRAL.version!==DBASE||LATEST)&&!confirm('Die zentrale config.js wurde seit Beginn dieses Entwurfs geändert. Beim Veröffentlichen werden diese Änderungen ersetzt (die alte Version wird archiviert). Trotzdem veröffentlichen?'))return;
+  if(!confirm('Veröffentlichen? Die aktuelle config.js wird nach „archiv“ gesichert und durch diesen Entwurf ersetzt.'))return;
+  const old=[CFG.version,CFG.published];CFG.version=CFG.published=new Date().toISOString();
+  const txt='window.PI_CONFIG = '+JSON.stringify(CFG,null,1)+';\n';
+  if(FSA){try{const r=await getRoot();
+      try{const cur=await readText(r,'config.js');await writeFile(r,'archiv/config_'+stamp()+'.js',cur,{unique:true});await prune(r)}catch(e){}
+      await writeFile(r,'config.js',txt);
+      CENTRAL=clone(CFG);DBASE=CFG.version;LATEST='';ls.del('pi_draft');setSync();render();return toast('Veröffentlicht. Die alte Version liegt in „archiv“.')}
+    catch(e){if(e.name==='AbortError'){[CFG.version,CFG.published]=old;return}}}
+  download(txt)}
+function download(txt){CFG.version=CFG.published=CFG.published||new Date().toISOString();dlText(new Blob([txt||'window.PI_CONFIG = '+JSON.stringify(CFG,null,1)+';\n'],{type:'text/javascript'}),'config.js');
+  alert('Dieser Browser kann nicht direkt in den Ordner speichern. config.js wurde heruntergeladen. Bitte jetzt im Intranet-Ordner die Datei veroeffentlichen.bat doppelklicken: Sie ersetzt config.js und archiviert die alte Version.')}
+
+/* ----- Tabellen ----- */
+const vis=()=>CFG.tabs.filter(t=>!t.intern&&!t.hidden&&!t.host);
+const allT=()=>CFG.tabs.filter(t=>!t.intern&&!t.hidden);
+const hosted=t=>CFG.tabs.filter(x=>x.host===t.id&&!x.hidden);
+const curSec=()=>CFG.tabs.find(t=>t.id===SEC&&t.cols)||CFG.tabs.find(t=>t.cols);
+const hit=r=>!Q||Object.values(r).join(' ').toLowerCase().includes(Q);
+const hits=t=>t.rows.filter(hit);
+const nHits=t=>t.type==='sop'?sopHits(t).length:hits(t).length+hosted(t).reduce((a,h)=>a+hits(h).length,0);
+const srcHtml=(q,l)=>{if(!q&&!l)return'';const t=esc(q||String(l).split('/').pop());const a=!l?t:/^https?:/i.test(l)?`<a href="${esc(l)}" target="_blank" rel="noopener">${t}</a>`:`<a href="${esc(encodeURI(l))}" target="_blank">${t}</a>`;return`<div class="src">Quelle: ${a}</div>`};
+const icn=t=>!t.icon?'':/^(data:|dokumente\/|https?:)/.test(t.icon)?`<span class="ic"><img src="${esc(t.icon)}" alt=""></span>`:`<span class="ic">${esc(t.icon)}</span>`;
+const CP=v=>`<button class="cp" data-c="${esc(v)}" title="Kopieren">${esc(v)}${ico('c')}</button>`;
+const hl=s=>{if(!Q)return s;const q=esc(Q).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');return s.replace(new RegExp(q,'gi'),m=>`<mark>${m}</mark>`)};
+function doseTxt(r){const u=r.einheit||'mg',g=!r.hi||r.hi==r.lo?fmtN(r.lo):fmtN(r.lo)+'–'+fmtN(r.hi);
+  return r.mode==='daily'?`${g} ${u}/kg/Tag in ${r.ed} Gaben`+(r.cap?`, max. ${fmtN(r.cap)} ${u}/Tag`:''):`${g} ${u}/kg je Gabe`+(r.max?`, max. ${fmtN(r.max)} ${u}/kg/Tag`:'')+(r.cap?`, max. ${fmtN(r.cap)} ${u}/Gabe`:'')}
+const auto=v=>{if(!v)return'';const e=esc(v);
+  if(/^https?:/i.test(v))return`<a href="${e}" target="_blank" rel="noopener">${e}</a>`;
+  if(/^[+\d][\d\s\/()-]{2,}$/.test(v))return`<a href="tel:${esc(v.replace(/[^\d+]/g,''))}">${e}</a>`;
+  if(/\.\w{2,5}$/.test(v))return`<a href="${esc(encodeURI(v))}" target="_blank">${esc(v.split('/').pop())}</a>`;return e};
+function cell(c,r){const v=r[c.k]??'';
+  if(c.t==='copy')return v?CP(v):'';
+  if(c.t==='dose')return esc(doseTxt(r));
+  if(c.t==='date')return v?dt(new Date(v)):'';
+  if(c.t==='due'){if(!v)return'';const o=v<today();return`<span class="${o?'od':''}">${dt(new Date(v))}${o?' (überfällig)':''}</span>`}
+  if(c.t==='auto')return auto(v);return hl(esc(v))}
+const lead=(t,r)=>String(r[t.cols.find(c=>!c.h).k]||'').trim()[0]?.toUpperCase()||'';
+function tableHtml(t,rows,anch){
+  const cs=t.cols.filter(c=>!c.h),seen={};
+  return`<div class="tw"><table><thead><tr>${cs.map(c=>`<th>${esc(c.l)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>{let id='';if(anch){const L=lead(t,r);if(L&&!seen[L]){seen[L]=1;id=` id="L${L.charCodeAt(0)}"`}}return`<tr${id}>${cs.map((c,i)=>`<td>${cell(c,r)}${i===0?srcHtml(r._q,r._l)+(EDIT?`<button class="pen" data-pen="${t.id}|${t.rows.indexOf(r)}" title="Bearbeiten">✎</button>`:''):''}</td>`).join('')}</tr>`}).join('')}</tbody></table></div>`}
+const FS={};
+const fsOf=t=>FS[t.id]||(FS[t.id]={q:'',c:''});
+const showF=t=>CFG.ui?.filters!==false&&!t.nofilter;
+function rowsOf(t){const f=fsOf(t),q=f.q.toLowerCase();return t.rows.filter(r=>(!q||Object.values(r).join(' ').toLowerCase().includes(q))&&(!f.c||String(r[t.fcol]||'')===f.c))}
+function body(t,sub){
+  if(t.type==='sop')return sopBody(t);
+  const rows=rowsOf(t);
+  if(!t.rows.length)return'<p class="none">Noch keine Einträge. Über „Inhalte pflegen“ ergänzen.</p>';
+  if(!rows.length)return'<p class="none">Keine Treffer.</p>';
+  if(t.groupBy){const G={};rows.forEach(r=>(G[r[t.groupBy]||'Ohne Ordner']??=[]).push(r));
+    return Object.keys(G).sort().map(g=>`<details open><summary><b>${esc(g)}</b> <span class="none">(${G[g].length})</span></summary>${tableHtml(t,G[g])}</details>`).join('')}
+  return tableHtml(t,rows,!sub&&t.rows.length>30)}
+const fbar=t=>{if(!showF(t))return'';const f=fsOf(t),opts=t.fcol?[...new Set((t.type==='sop'?t.items:t.rows).map(r=>r[t.fcol]).filter(Boolean))].sort():[];
+  return`<div class="fbar"><input class="f" data-fq="${t.id}" placeholder="In diesem Bereich suchen …" value="${esc(f.q)}">${opts.length?`<select class="f" data-fc="${t.id}"><option value="">Alle: ${esc(((t.cols||[]).find(c=>c.k===t.fcol)||{}).l||'Kategorie')}</option>${opts.map(o=>`<option ${o===f.c?'selected':''}>${esc(o)}</option>`).join('')}</select>`:''}</div>`};
+function block(t,sub){
+  const anch=!sub&&t.rows.length>30&&!t.groupBy,L=[...new Set(t.rows.map(r=>lead(t,r)).filter(Boolean))],H=sub?'h3':'h2';
+  return`<div class="hd2"><${H} style="${sub?'margin:22px 0 0':''}">${esc(t.title)}</${H}><span>Stand ${dt(new Date(t.upd))} · ${t.rows.length} Einträge</span><span class="sp"></span>${t.proto?`<button class="btn" data-proto="new">Neues Protokoll (Word)</button><label class="btn">Protokoll hochladen (PDF, Foto, Word)<input type="file" hidden multiple accept=".pdf,.doc,.docx,image/*" data-protoup="1"></label>`:''}${EDIT&&t.upload?`<label class="btn">Datei hinzufügen<input type="file" hidden multiple data-up="${t.id}"></label>`:''}<button class="btn" data-print="1">Drucken</button>${EDIT?`<button class="btn" data-menu="${t.id}">✎ Bereich bearbeiten</button>`:''}</div>${t.note?`<p class="note">${esc(t.note)}</p>`:''}${t.src||t.srcl?srcHtml(t.src,t.srcl):''}${fbar(t)}${anch?`<div class="chips">${L.map(l=>`<button class="chip" data-j="L${l.charCodeAt(0)}">${esc(l)}</button>`).join('')}</div>`:''}<div id="tb-${t.id}">${body(t,sub)}</div>`}
+const tableView=t=>block(t)+hosted(t).map(h=>block(h,1)).join('');
+
+/* ----- Seiten ----- */
+function groups(){const G=[];vis().forEach(t=>{const g=t.grp||'Weitere';let x=G.find(y=>y[0]===g);if(!x)G.push(x=[g,[]]);x[1].push(t)});return G}
+function navHtml(){
+  const item=(id,l,n,ic)=>`<button data-t="${id}" title="${esc(l)}" class="${TAB===id&&!Q?'on':''}"><span>${ic||`<span class="ic ini">${esc(l[0])}</span>`}<span class="tx">${esc(l)}</span></span>${n!=null?`<i class="${n?'':'z'}">${n}</i>`:''}</button>`;
+  return`<button class="navt" id="navT" title="Seitenleiste ein-/ausklappen">☰</button>`+item('start','Übersicht',null,'<span class="ic">🏠</span>')+groups().map(([g,ts])=>`<div class="g">${esc(g)}</div>`+ts.map(t=>item(t.id,t.title,Q&&(t.cols||t.type==='sop')?nHits(t):null,icn(t))).join('')).join('')+'<div class="g">Pflege</div>'+item('settings','Inhalte pflegen',null,'<span class="ic">⚙️</span>')}
+function qmDue(){
+  const L=[],q=CFG.tabs.find(t=>t.id==='qm');
+  if(q)q.rows.forEach(r=>{if(r.faellig&&r.faellig<=inDays(30))L.push([r.dok,r.faellig])});
+  CFG.tabs.filter(t=>t.type==='sop').forEach(t=>(t.items||[]).forEach(i=>{if(i.pruefung&&i.pruefung<=inDays(30))L.push([i.title,i.pruefung])}));
+  L.sort((a,b)=>a[0+1]<b[1]?-1:1);
+  return L.length?`<h3>QM: Prüfungen fällig</h3><div class="nws">${L.map(([n,d])=>`<div class="nw ${d<today()?'w':''}">${ico('i')}<span>${esc(n)}: ${dt(new Date(d))}${d<today()?' (überfällig)':''}</span></div>`).join('')}</div>`:''}
+function startView(){
+  const V=vis().filter(t=>t.cols||t.type==='rechner'||t.type==='sop'),used=Object.keys(USE).length>0;
+  const top=[...V].sort((a,b)=>(USE[b.id]||0)-(USE[a.id]||0)).slice(0,6);
+  const tile=t=>`<button class="tile" data-t="${t.id}"><b>${icn(t)}${esc(t.title)}</b><span>${esc(t.desc||'')}</span>${t.cols?`<em>${t.rows.length+hosted(t).reduce((a,h)=>a+h.rows.length,0)} Einträge</em>`:t.type==='sop'?`<em>${(t.items||[]).length} Anweisungen</em>`:''}</button>`;
+  return`${CFG.logo?`<img class="plogo" src="${esc(CFG.logo)}" alt="">`:''}<div class="hd2"><h2>Aktuelle Praxis-Hinweise</h2><span class="sp"></span><button class="btn" id="newsBtn">Hinweise bearbeiten</button></div><div class="nws">${NEWS.length?NEWS.map(n=>`<div class="nw ${n.w?'w':''}">${ico(n.w?'w':'i')}<span>${esc(n.t)}</span></div>`).join(''):'<p class="none">Aktuell keine Hinweise.</p>'}</div><p class="none">${esc(NEWSAT)}</p>
+${qmDue()}<h3>${used?'Häufig genutzt':'Schnellzugriff'}</h3><div class="tiles">${top.map(tile).join('')}</div>
+${groups().map(([g,ts])=>`<h3>${esc(g)}</h3><div class="tiles">${ts.map(tile).join('')}</div>`).join('')}`}
+function results(){
+  const R=allT().filter(t=>t.cols).map(t=>[t,hits(t)]).filter(x=>x[1].length),S=allT().filter(t=>t.type==='sop').flatMap(t=>sopHits(t).map(i=>[t,i]));
+  const n=R.reduce((a,x)=>a+x[1].length,0)+S.length;
+  if(!n)return`<h2>Keine Treffer für „${esc(Q)}“</h2><p class="none">Anderen Begriff versuchen, z. B. Wirkstoff, Handelsname, Erkrankung, Ziffer oder Kürzel.</p>`;
+  return`<h2>${n} Treffer für „${esc(Q)}“ in ${R.length+(S.length?1:0)} Bereichen</h2>`+R.map(([t,r])=>`<div class="rs"><div class="hd2"><h3 style="margin:14px 0 0">${icn(t)}${esc(t.title)} (${r.length})</h3><span class="sp"></span><button class="btn" data-t="${t.host||t.id}" data-clr="1">Bereich öffnen</button></div>${tableHtml(t,r.slice(0,15))}${r.length>15?`<p class="none">… und ${r.length-15} weitere im Bereich.</p>`:''}</div>`).join('')
+   +(S.length?`<div class="rs"><h3 style="margin:14px 0 6px">Arbeitsanweisungen (${S.length})</h3>${S.slice(0,15).map(([t,i])=>`<button class="sopr" data-sop="${i.id}" data-sopt="${t.id}"><b>${esc(i.title)}</b><span class="tag">${esc(i.kat||'')}</span></button>`).join('')}</div>`:'')}
+
+const RECH=`<h2>Rechner</h2><div class="grid">
+<div><h3>Gewichts-Dosierungsrechner</h3><p class="note">Werte stammen aus „Dosierungen“. Vor Einsatz prüfen.</p>
+<label for="dm">Präparat</label><select id="dm" class="f"></select>
+<label for="kg">Körpergewicht (kg)</label><input id="kg" class="f" inputmode="decimal" placeholder="z. B. 12,5"><div id="dout"></div></div>
+<div><h3>Alters- und U-Untersuchungs-Rechner</h3>
+<label for="dob">Geburtsdatum</label><input id="dob" type="date" class="f"><div id="aout"></div></div>
+<div><h3>Weitere Rechner (Formeln unter „Inhalte pflegen“ anpassbar)</h3>
+<label for="fm">Rechner</label><select id="fm" class="f"></select>
+<label for="fk">Gewicht (kg)</label><input id="fk" class="f" inputmode="decimal">
+<label for="fc">Größe (cm, falls benötigt)</label><input id="fc" class="f" inputmode="decimal"><div id="fo"></div></div></div>`;
+const fw=x=>String(Math.round(x*100)/100).replace('.',',');
+function dose(r,w){
+  const u=esc(r.einheit||'mg'),c=nf(r.conc),lo=nf(r.lo),hi=nf(r.hi)||lo,cap=nf(r.cap)||1e12;
+  const ml=a=>c>0?` (${rg(a.map(x=>x/c))} ml)`:'',fo=x=>`<div class="fo">${x}</div>`,sp=lo===hi?fw(lo):fw(lo)+'–'+fw(hi);
+  const cf=c>0?` · ml = mg ÷ ${fw(c)} mg/ml`:'';let h='';
+  const raw=[lo*w,hi*w],lim=raw.some(x=>x>cap);
+  if(r.mode==='daily'){const d=raw.map(x=>Math.min(x,cap));
+    h=`<p>Tagesdosis: <span class="big">${rg(d)} ${u}</span></p>`+fo(`= ${sp} ${u}/kg/Tag × ${fw(w)} kg`+(lim?` (begrenzt auf max. ${fmtN(cap)} ${u}/Tag)`:''));
+    String(r.ed).split(/[-–,]/).map(nf).filter(n=>n>0).forEach(n=>{const s=d.map(x=>x/n);h+=`<p>${n}× täglich: <b>${rg(s)} ${u}</b>${ml(s)}</p>`+fo(`= Tagesdosis ÷ ${n}${cf}`)})}
+  else{const s=raw.map(x=>Math.min(x,cap));
+    h=`<p>Einzeldosis: <span class="big">${rg(s)} ${u}</span>${ml(s)}</p>`+fo(`= ${sp} ${u}/kg × ${fw(w)} kg`+(lim?` (begrenzt auf max. ${fmtN(cap)} ${u}/Gabe)`:'')+cf)+(r.ed?`<p>Max. ${esc(r.ed)} Gaben pro Tag</p>`:'')+(nf(r.max)?`<p>Tagesmaximum: <b>${fm(nf(r.max)*w)} ${u}</b></p>`+fo(`= ${fmtN(r.max)} ${u}/kg/Tag × ${fw(w)} kg`):'')}
+  return h+`<p class="none">${esc(r.hinweis)}</p>`+srcHtml(r._q,r._l)}
+function initRechner(){
+  const get=id=>CFG.tabs.find(t=>t.id===id)?.rows||[];
+  const L=get('medis').filter(r=>nf(r.lo)>0),sel=$('#dm'),kg=$('#kg'),out=$('#dout');
+  sel.innerHTML=L.map((m,i)=>`<option value="${i}">${esc(m.name)}</option>`).join('');
+  sel.onchange=kg.oninput=()=>{const w=nf(kg.value),r=L[sel.value];out.innerHTML=!r?'':w>0&&w<=150?`<div class="res">${dose(r,w)}</div>`:w>150?'<div class="res">Bitte Gewicht prüfen.</div>':`<div class="res"><div class="fo">Dosis = Dosis je kg × Körpergewicht · Einzeldosis = Tagesdosis ÷ Anzahl Gaben · ml = mg ÷ Konzentration</div>${srcHtml(r._q,r._l)}</div>`};
+  sel.onchange();
+  const FR=get('formeln'),fs=$('#fm'),fk=$('#fk'),fc=$('#fc'),fo=$('#fo');
+  fs.innerHTML=FR.map((r,i)=>`<option value="${i}">${esc(r.name)}</option>`).join('');
+  fs.onchange=fk.oninput=fc.oninput=()=>{const r=FR[fs.value],k=nf(fk.value);if(!r){fo.innerHTML='';return}
+    const fml=`<div class="fo">Formel: ${esc(r.formel)}</div>`,src=srcHtml(r._q,r._l);
+    if(!(k>0)){fo.innerHTML=`<div class="res">${fml}<p class="none">${esc(r.hinweis)}</p>${src}</div>`;return}
+    try{const c=nf(fc.value)||0,v=new Function('kg','cm','with(Math){return ('+r.formel+')}')(k,c);
+      fo.innerHTML=isFinite(v)?`<div class="res"><span class="big">${fm(v)} ${esc(r.einheit)}</span>${fml}<div class="fo">mit kg = ${fw(k)}${c>0?`, cm = ${fw(c)}`:''}</div><p class="none">${esc(r.hinweis)}</p>${src}</div>`:'<div class="res">Nicht berechenbar. Größe angegeben?</div>'}
+    catch(e){fo.innerHTML='<div class="res">Formel fehlerhaft: '+esc(e.message)+'</div>'}};
+  fs.onchange();
+  const dob=$('#dob'),ao=$('#aout');
+  const uf=`<div class="fo">Alter = heute − Geburtsdatum · Lebenstag = Tage seit Geburt + 1 · Fenster = Geburtsdatum + Lebenstag (von … bis …) − 1</div>`+srcHtml('G-BA Kinder-Richtlinie (Beispieldaten, Näherung in Tagen)','https://www.g-ba.de');
+  ao.innerHTML=`<div class="res">${uf}</div>`;
+  dob.oninput=()=>{
+    if(!dob.value){ao.innerHTML=`<div class="res">${uf}</div>`;return}
+    const b=new Date(dob.value+'T00:00:00'),n=new Date();n.setHours(0,0,0,0);
+    if(b>n){ao.innerHTML='<div class="res">Das Geburtsdatum liegt in der Zukunft.</div>';return}
+    let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth(),d=n.getDate()-b.getDate();
+    if(d<0){m--;d+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}
+    if(m<0){y--;m+=12}
+    const days=Math.round((n-b)/864e5),life=days+1,on=k=>new Date(b.getFullYear(),b.getMonth(),b.getDate()+k-1);
+    const now=UU.filter(x=>life>=x[3][0]&&life<=x[3][1]),nxt=UU.find(x=>x[3][0]>life);
+    let h=`<p>Alter: <span class="big">${y} J, ${m} M, ${d} T</span></p><div class="fo">= ${days} Tage seit Geburt ≙ ${Math.floor(days/7)} Wochen · Lebenstag ${life}</div>`;
+    h+=now.length?now.map(x=>`<p>Aktuell: <b>${x[0]}</b> (${x[1]})<br>Sollzeitraum ${dt(on(x[2][0]))} – ${dt(on(x[2][1]))}${life>=x[2][0]&&life<=x[2][1]?' · <b>jetzt im Sollzeitraum</b>':' · im Toleranzzeitraum'}<br>Toleranz bis ${dt(on(x[3][1]))}</p><div class="fo">Soll: Lebenstag ${x[2][0]}–${x[2][1]} · Toleranz: Lebenstag ${x[3][0]}–${x[3][1]}</div>`).join(''):'<p>Aktuell keine U-Untersuchung im Zeitfenster.</p>';
+    if(nxt)h+=`<p>Als Nächstes: <b>${nxt[0]}</b> ab ${dt(on(nxt[3][0]))} (in ${nxt[3][0]-life} Tagen)</p><div class="fo">= Lebenstag ${nxt[3][0]} − heutiger Lebenstag ${life}</div>`;
+    ao.innerHTML=`<div class="res">${h}${uf}</div>`};
+}
+
+/* ----- Einstellungen ----- */
+function inp(c,r,i){const v=r[c.k]??'',e=`data-e="${i}|${c.k}"`;
+  if(c.t==='date'||c.t==='due')return`<input type="date" ${e} value="${esc(v)}">`;
+  return`<textarea rows="1" ${e}>${esc(v)}</textarea>`+(c.t==='auto'?`<label class="btn">Datei wählen<input type="file" hidden data-pf="${i}|${c.k}"></label>`:'')}
+function settings(){
+  const log=CFG.log.length?`<ul class="log">${CFG.log.slice(0,30).map(l=>`<li>${new Date(l.t).toLocaleString('de-DE')} – ${esc(l.s)}: ${esc(l.a)}${l.u?' ('+esc(l.u)+')':''}</li>`).join('')}</ul>`:'<p class="none">Noch keine Änderungen.</p>';
+  const newsB='<p><button class="btn" id="newsBtn">Tageshinweise bearbeiten</button> <span class="none">für alle Mitarbeitenden, ohne Bearbeitungsmodus</span></p>';
+  if(!EDIT)return`<h2>Inhalte pflegen</h2>${newsB}<p class="none">Alle anderen Inhalte kommen zentral aus der Datei config.js im Netzwerkordner und sind an diesem PC schreibgeschützt. Die Pflege übernimmt die verantwortliche Person.</p><p class="none">Stand der Inhalte: ${CFG.published?new Date(CFG.published).toLocaleString('de-DE'):'unbekannt'}</p><p><button class="btn" id="editOn">Bearbeitungsmodus starten</button></p><p class="none">Im Bearbeitungsmodus entsteht ein Entwurf nur auf diesem PC. Andere PCs sehen ihn erst, wenn die neue config.js im Netzwerkordner ersetzt wurde.</p><h3>Änderungsprotokoll</h3>${log}`;
+  const t=CFG.tabs,s=curSec(),cs=[...s.cols.filter(c=>c.t!=='dose'),{k:'_q',l:'Quelle (Text)',t:''},{k:'_l',l:'Quelle: Datei oder Link',t:'auto'}];
+  const sym=x=>x.icon&&!/^(data:|dokumente\/|https?:)/.test(x.icon)?x.icon:'';
+  return`<h2>Inhalte pflegen (Bearbeitungsmodus)</h2>${newsB}<p class="none">Änderungen bleiben ein Entwurf auf diesem PC, bis sie unten veröffentlicht werden.</p>
+<h3>Praxis-Logo</h3><p>Kopfzeile und Übersicht: ${CFG.logo?`<img src="${esc(CFG.logo)}" alt="" style="height:28px;vertical-align:middle"> `:''}<label class="btn">Bild wählen<input type="file" accept="image/*" hidden data-logo="1"></label>${CFG.logo?' <button class="btn" id="logoX">Entfernen</button>':''}</p>
+<h3>Speicherort und Sicherheit</h3><p class="none">${FSA?(ROOT?'Intranet-Ordner verbunden: '+esc(ROOT.name):'Intranet-Ordner noch nicht verbunden (wird beim ersten Speichern abgefragt).'):'Dieser Browser kann nicht direkt in Ordner speichern (z. B. Firefox). Zum Bearbeiten bitte Edge oder Chrome verwenden, sonst veroeffentlichen.bat benutzen.'}</p>
+<p>${FSA?'<button class="btn" id="rootB">Intranet-Ordner wählen</button> <button class="btn" id="verB">Frühere Versionen (Archiv)</button> ':''}${CFG.docMap&&Object.keys(CFG.docMap).length?'<button class="btn" id="moveB">Dokumente in Unterordner einsortieren ('+Object.keys(CFG.docMap).length+')</button>':''}</p>
+<p><label><input type="checkbox" data-ui="filters" ${CFG.ui?.filters===false?'':'checked'}> Suchleiste und Kategorien-Filter in den Bereichen anzeigen</label></p>
+<p>PIN für den Bearbeitungsmodus (Schutz vor Versehen, keine echte Sicherheit): <input type="password" id="pinIn" class="f" style="max-width:140px"> <button class="btn" id="pinSet">Speichern</button> <button class="btn" id="pinDel">Entfernen</button> <span class="none">${CFG.pinHash?'PIN ist gesetzt':'keine PIN'}</span></p>
+<h3>Reiter, Gruppen und Logos</h3><div class="tw"><table><thead><tr><th>Reihenfolge</th><th>Name</th><th>Gruppe</th><th>Logo (Symbol oder Bild)</th><th>Sichtbar</th><th>Startseite</th><th></th></tr></thead><tbody>
+<tr><td></td><td>Übersicht</td><td></td><td></td><td></td><td><input type="radio" name="st" data-st="start" ${CFG.start==='start'?'checked':''}></td><td></td></tr>
+${t.map((x,i)=>`<tr><td><button class="btn" data-mv="${i},-1">▲</button> <button class="btn" data-mv="${i},1">▼</button></td><td><input data-ti="${i}" value="${esc(x.title)}"></td><td><input data-gr="${i}" value="${esc(x.grp||'')}"></td><td>${icn(x)}<input data-ic="${i}" value="${esc(sym(x))}" placeholder="Symbol" style="width:80px;min-width:0"> <label class="btn">Bild<input type="file" accept="image/*" hidden data-icf="${i}"></label>${x.icon?` <button class="btn" data-icx="${i}">✕</button>`:''}</td><td><input type="checkbox" data-hid="${i}" ${x.hidden?'':'checked'} ${x.intern?'disabled':''}></td><td><input type="radio" name="st" data-st="${x.id}" ${CFG.start===x.id?'checked':''} ${x.intern||x.host?'disabled':''}></td><td><button class="btn" data-del="${i}">Löschen</button></td></tr>`).join('')}</tbody></table></div>
+<p><button class="btn" id="newTab">Neuen Reiter anlegen</button></p>
+<h3>Inhalte bearbeiten</h3><select class="f" id="secSel">${t.filter(x=>x.cols).map(x=>`<option value="${x.id}" ${x.id===s.id?'selected':''}>${esc(x.title)}</option>`).join('')}</select>
+<div class="grid" style="margin-top:6px"><div><label>Quelle des Bereichs (Text)</label><input class="f" data-ts="src" value="${esc(s.src||'')}"></div><div><label>Quelle des Bereichs: Datei oder Link</label><input class="f" data-ts="srcl" value="${esc(s.srcl||'')}"></div></div>
+<div class="tw" style="margin-top:10px"><table><thead><tr>${cs.map(c=>`<th>${esc(c.l)}</th>`).join('')}<th></th></tr></thead><tbody>${s.rows.map((r,i)=>`<tr>${cs.map(c=>`<td>${inp(c,r,i)}</td>`).join('')}<td><button class="btn" data-rd="${i}">Zeile löschen</button></td></tr>`).join('')}</tbody></table></div>
+<p><button class="btn" id="addRow">Zeile hinzufügen</button></p>
+<h3>Veröffentlichen</h3><p class="none">1. „Veröffentlichen“ klicken und im Dialog die Datei config.js im Netzwerkordner auswählen (überschreiben; Chrome/Edge). 2. An den anderen PCs die Seite neu laden (F5). Hochgeladene Dateien liegen sofort im Ordner „dokumente“.</p>
+<p><button class="btn" id="pub">Veröffentlichen (config.js speichern)</button> <button class="btn" id="dl">Als Datei herunterladen</button> <button class="btn" id="discard">Entwurf verwerfen</button> <button class="btn" id="editOff">Bearbeitungsmodus beenden</button></p>
+<h3>Änderungsprotokoll</h3>${log}`}
+
+/* ----- Darstellung ----- */
+function renderAlert(){
+  const u=NEWS.filter(n=>n.w),b=[];
+  if(EDIT)b.push(`<div class="al">${ico('w')}<span>Bearbeitungsmodus: Entwurf nur auf diesem PC, nicht veröffentlicht.${(CENTRAL.version!==DBASE||LATEST)?' Achtung: Die zentrale config.js wurde seit Beginn dieses Entwurfs geändert.':''}</span></div>`);
+  else if(LATEST)b.push(`<div class="al" id="reloadB" style="cursor:pointer">${ico('i')}<span>Neue Inhalte verfügbar. Hier klicken zum Aktualisieren.</span></div>`);
+  if(!(TAB==='start'&&!Q))u.forEach(n=>b.push(`<div class="al">${ico('w')}<span>${esc(n.t)}</span></div>`));
+  $('#alert').innerHTML=b.join('')}
+function render(){
+  if(TAB!=='start'&&TAB!=='settings'&&!vis().find(t=>t.id===TAB))TAB='start';
+  $('#nav').innerHTML=navHtml();
+  $('#logo').innerHTML=CFG.logo?`<img src="${esc(CFG.logo)}" alt="">`:'';
+  const t=vis().find(x=>x.id===TAB);
+  $('#view').innerHTML=Q?results():TAB==='start'?startView():TAB==='settings'?settings():t.type==='rechner'?RECH:t.type==='sop'?sopView(t):tableView(t);
+  renderAlert();
+  if(!Q&&TAB==='rechner')initRechner();
+}
+function parseNews(s){
+  if(typeof s!=='string'){NEWS=[{w:1,t:'neuigkeiten.js fehlt oder ist fehlerhaft (im Text keine Zeichen ` und ${ verwenden).'}];NEWSALL=[];NEWSAT='';return}
+  NEWSALL=s.split(/\r?\n/).map(x=>x.trim()).filter(x=>x&&!x.startsWith('#')).map(x=>{let w=0,t=x,exp='';if(t.startsWith('!')){w=1;t=t.slice(1).trim()}const m=t.match(/\s*\|\s*bis\s+(\d{4}-\d{2}-\d{2})\s*$/);if(m){exp=m[1];t=t.slice(0,m.index).trim()}return{w,t,exp}});
+  NEWS=NEWSALL.filter(n=>!n.exp||n.exp>=today());
+  NEWSAT='Aktualisiert '+new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' Uhr'}
+async function loadNews(){await loadJS('neuigkeiten.js');parseNews(window.PI_NEWS);if(!/TEXTAREA|INPUT|SELECT/.test(document.activeElement.tagName))render()}
+
+/* ----- Dateien im Ordner „dokumente“, Hinweise, Protokolle ----- */
+const FSA=!!window.showDirectoryPicker;let ROOT=null;
+const resize=(f,m)=>new Promise(res=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/png'))};im.onerror=()=>res('');im.src=u});
+function dlText(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click()}
+const idb=(m,k,v)=>new Promise((res,rej)=>{const r=indexedDB.open('pi',1);r.onupgradeneeded=()=>r.result.createObjectStore('h');r.onerror=()=>rej();r.onsuccess=()=>{try{const s=r.result.transaction('h',m==='get'?'readonly':'readwrite').objectStore('h'),q=m==='get'?s.get(k):s.put(v,k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej()}catch(e){rej(e)}}});
+async function granted(h){try{return(await h.queryPermission({mode:'readwrite'}))==='granted'||(await h.requestPermission({mode:'readwrite'}))==='granted'}catch(e){return false}}
+async function getRoot(force){
+  if(!FSA)return null;
+  if(!force){if(ROOT&&await granted(ROOT))return ROOT;
+    try{const h=await idb('get','root');if(h&&await granted(h)){ROOT=h;return h}}catch(e){}}
+  alert('Bitte im folgenden Dialog den Intranet-Ordner (mit index.html) auswählen und das Bearbeiten erlauben.');
+  const h=await showDirectoryPicker({mode:'readwrite',id:'intranet'});
+  try{await h.getFileHandle('index.html')}catch(e){alert('In diesem Ordner liegt keine index.html. Bitte den Hauptordner des Intranets wählen.');throw{name:'AbortError'}}
+  ROOT=h;try{await idb('put','root',h)}catch(e){}return h}
+async function dirAt(r,path,create){let d=r;for(const p of path.split('/').filter(Boolean))d=await d.getDirectoryHandle(p,{create:!!create});return d}
+async function writeFile(r,path,data,o={}){
+  const i=path.lastIndexOf('/'),dn=i<0?'':path.slice(0,i),d=await dirAt(r,dn,true);let n=path.slice(i+1);
+  if(o.unique){const b=n;let k=1;for(;;){try{await d.getFileHandle(n);n=b.replace(/(\.\w+)?$/,'_'+(k++)+'$1')}catch(e){break}}}
+  const w=await(await d.getFileHandle(n,{create:true})).createWritable();await w.write(data);await w.close();return(dn?dn+'/':'')+n}
+async function readText(r,path){const i=path.lastIndexOf('/'),d=await dirAt(r,i<0?'':path.slice(0,i));return(await(await d.getFileHandle(path.slice(i+1))).getFile()).text()}
+async function saveToDocs(file,sub,name){
+  name=(name||file.name).replace(/[\\/:*?"<>|]/g,'_');sub=(sub||'').replace(/[\\:*?"<>|]/g,'_').replace(/^\/+|\/+$/g,'');
+  const rel='dokumente/'+(sub?sub+'/':'')+name;
+  if(FSA){try{return await writeFile(await getRoot(),rel,file,{unique:true})}catch(e){if(e.name==='AbortError')throw e}}
+  dlText(file,name);alert('Dieser Browser kann nicht direkt in den Ordner speichern. Die Datei wurde heruntergeladen: bitte nach „dokumente'+(sub?'\\'+sub.replace(/\//g,'\\'):'')+'“ kopieren (oder Edge/Chrome verwenden).');return rel}
+function overlay(html){const o=document.createElement('div');o.className='ov';o.innerHTML=`<div class="dlg">${html}</div>`;document.body.appendChild(o);return o}
+function startEdit(){
+  if(CENTRAL.pinHash&&hashPin(prompt('PIN für den Bearbeitungsmodus:')||'')!==CENTRAL.pinHash){alert('PIN falsch.');return false}
+  if(!ls.get('pi_user'))ls.set('pi_user',(prompt('Ihr Kürzel für das Änderungsprotokoll (z. B. AL):')||'').trim());
+  ls.set('pi_edit','1');EDIT=true;CFG=clone(CENTRAL);CFG.log=CFG.log||[];DBASE=CENTRAL.version;persist();setSync();render();return true}
+async function needEdit(){if(EDIT)return true;if(!confirm('Dafür wird der Bearbeitungsmodus gestartet (Entwurf nur auf diesem PC; für alle sichtbar erst nach „Veröffentlichen“). Fortfahren?'))return false;return startEdit()}
+function pickFolder(t){return new Promise(res=>{const vals=[...new Set(t.rows.map(r=>r[t.groupBy]).filter(Boolean))].sort();
+  const o=overlay(`<h2>In welchen Ordner?</h2><select class="f" id="pf">${vals.map(v=>`<option>${esc(v)}</option>`).join('')}<option value="">Neuer Ordner …</option></select><input class="f" id="pn" placeholder="Name des neuen Ordners" style="margin-top:8px;display:${vals.length?'none':'block'}"><p><button class="btn" id="po2">OK</button> <button class="btn" id="pc2">Abbrechen</button></p>`),sl=o.querySelector('#pf'),n=o.querySelector('#pn');
+  sl.onchange=()=>n.style.display=sl.value?'none':'block';
+  o.querySelector('#pc2').onclick=()=>{o.remove();res(null)};o.querySelector('#po2').onclick=()=>{const v=sl.value||n.value.trim();if(!v)return;o.remove();res(v)}})}
+async function moveDocs(){
+  if(!FSA)return alert('Dieser Browser kann keine Dateien verschieben. Bitte Edge oder Chrome verwenden oder die Dateien von Hand in die Unterordner legen.');
+  let r;try{r=await getRoot()}catch(e){return}
+  let js=JSON.stringify(CFG),n=0;const left={};
+  for(const[f,ord]of Object.entries(CFG.docMap||{})){
+    try{const d=await dirAt(r,'dokumente'),file=await(await d.getFileHandle(f)).getFile();await writeFile(r,'dokumente/'+ord+'/'+f,file);await d.removeEntry(f);js=js.split('dokumente/'+f).join('dokumente/'+ord+'/'+f);n++}catch(e){left[f]=ord}}
+  CFG=JSON.parse(js);if(Object.keys(left).length)CFG.docMap=left;else delete CFG.docMap;
+  logSave('Dokumente',n+' Datei(en) in Unterordner einsortiert');render();toast(n+' Datei(en) einsortiert'+(Object.keys(left).length?', '+Object.keys(left).length+' nicht gefunden':'')+'. Jetzt veröffentlichen.')}
+async function versionsDlg(){
+  let r;try{r=await getRoot()}catch(e){return}
+  const names=[];try{const d=await dirAt(r,'archiv');for await(const[k]of d.entries())if(/^config_.*\.js$/.test(k))names.push(k)}catch(e){}
+  names.sort().reverse();
+  const o=overlay(`<h2>Frühere Versionen</h2><p class="none">„Laden“ übernimmt die Version als Entwurf. Erst „Veröffentlichen“ macht sie für alle sichtbar.</p>${names.length?names.map((n,i)=>`<div class="nr"><span style="flex:1">${esc(n.replace(/^config_|\.js$/g,'').replace('_',' '))}</span><button class="btn" data-vn="${i}">Laden</button></div>`).join(''):'<p class="none">Noch keine archivierten Versionen.</p>'}<p><button class="btn" id="vc">Schließen</button></p>`);
+  o.querySelector('#vc').onclick=()=>o.remove();
+  o.onclick=async e=>{const b=e.target.closest('[data-vn]');if(!b)return;
+    try{const t=await readText(r,'archiv/'+names[b.dataset.vn]),c=JSON.parse(t.slice(t.indexOf('{'),t.lastIndexOf('}')+1));if(!c.tabs)throw 0;CFG=c;CFG.log=CFG.log||[];logSave('Version','Zurückgekehrt zu '+names[b.dataset.vn]);o.remove();render();toast('Version als Entwurf geladen.')}catch(x){alert('Version konnte nicht gelesen werden.')}}}
+function rowDrawer(id,idx){
+  const t=CFG.tabs.find(x=>x.id===id),isNew=idx<0,r=isNew?{}:{...t.rows[idx]};
+  const cs=[...t.cols.filter(c=>c.t!=='dose'),{k:'_q',l:'Quelle (Text)',t:''},{k:'_l',l:'Quelle: Datei oder Link',t:'auto'}];
+  const o=overlay(`<h2>${isNew?'Neuer Eintrag':'Eintrag bearbeiten'}: ${esc(t.title)}</h2>${cs.map(c=>{const v=r[c.k]??(isNew&&c.t==='date'?today():'');return`<label>${esc(c.l)}</label>`+(c.t==='date'||c.t==='due'?`<input type="date" class="f" data-k="${c.k}" value="${esc(v)}">`:`<textarea class="f" rows="${String(v).length>80?4:1}" data-k="${c.k}">${esc(v)}</textarea>`)+(c.t==='auto'?`<label class="btn">Datei wählen<input type="file" hidden data-dpf="${c.k}"></label>`:'')}).join('')}<p><button class="btn" id="rs">Speichern</button> ${isNew?'':'<button class="btn" id="rd2">Löschen</button> '}<button class="btn" id="rc">Abbrechen</button></p>`);
+  o.onchange=async e=>{const k=e.target.dataset.dpf;if(!k||!e.target.files[0])return;try{const sub=(o.querySelector('[data-k="'+(t.groupBy||'_')+'"]')||{}).value||'';o.querySelector('[data-k="'+k+'"]').value=await saveToDocs(e.target.files[0],sub)}catch(x){}};
+  o.querySelector('#rc').onclick=()=>o.remove();
+  if(!isNew)o.querySelector('#rd2').onclick=()=>{if(confirm('Eintrag löschen?')){t.rows.splice(idx,1);touch(t,'Eintrag gelöscht');o.remove();render()}};
+  o.querySelector('#rs').onclick=()=>{o.querySelectorAll('[data-k]').forEach(i=>{r[i.dataset.k]=i.value});if(isNew)t.proto?t.rows.unshift(r):t.rows.push(r);else t.rows[idx]=r;touch(t,isNew?'Eintrag hinzugefügt':'Eintrag geändert');o.remove();render()}}
+function secMenu(id){
+  const t=CFG.tabs.find(x=>x.id===id),real=t.cols.filter(c=>c.t!=='dose');
+  const symb=t.icon&&!/^(data:|dokumente\/|https?:)/.test(t.icon)?t.icon:'';
+  const o=overlay(`<h2>Bereich: ${esc(t.title)}</h2><p><button class="btn" id="m-new">+ Eintrag hinzufügen</button> <button class="btn" id="m-exp">Expertenansicht (Tabelle)</button></p>
+<h3>Quelle des Bereichs</h3><input class="f" id="m-src" placeholder="Text" value="${esc(t.src||'')}"><input class="f" id="m-srcl" placeholder="Datei oder Link" value="${esc(t.srcl||'')}" style="margin-top:6px">
+<h3>Symbol</h3><input class="f" id="m-ic" placeholder="Symbol" value="${esc(symb)}" style="max-width:140px"> <label class="btn" style="display:inline-block">Bild wählen<input type="file" accept="image/*" hidden id="m-icf"></label>
+<h3>Suche und Kategorien</h3><label><input type="checkbox" id="m-nf" ${t.nofilter?'':'checked'}> Suchleiste und Kategorien in diesem Bereich anzeigen</label><label style="margin-top:8px">Kategorie-Spalte</label><select class="f" id="m-fc"><option value="">keine</option>${real.map(c=>`<option value="${c.k}" ${t.fcol===c.k?'selected':''}>${esc(c.l)}</option>`).join('')}</select>
+<h3>Spalten</h3><div id="m-cols">${t.cols.map((c,i)=>`<div class="nr"><input class="f" data-cl="${i}" value="${esc(c.l)}"><label><input type="checkbox" data-ch="${i}" ${c.h?'':'checked'}> sichtbar</label>${c.t==='dose'?'':`<button class="btn" data-cx="${i}">✕</button>`}</div>`).join('')}</div><p><button class="btn" id="m-addc">+ Spalte</button></p>
+<h3>Excel / CSV</h3><p><button class="btn" id="m-imp">Aus Excel einfügen …</button> <button class="btn" id="m-csv">Als CSV exportieren</button></p>
+<p><button class="btn" id="m-ok">Übernehmen</button> <button class="btn" id="m-x">Schließen</button></p>`);
+  const q=s=>o.querySelector(s);
+  q('#m-x').onclick=()=>o.remove();
+  q('#m-new').onclick=()=>{o.remove();rowDrawer(id,-1)};
+  q('#m-exp').onclick=()=>{o.remove();SEC=id;TAB='settings';render()};
+  q('#m-icf').onchange=async e=>{const r=await resize(e.target.files[0],96);if(r){t.icon=r;logSave(t.title,'Logo geändert');toast('Bild übernommen.')}};
+  q('#m-addc').onclick=()=>{const l=prompt('Name der neuen Spalte:');if(!l)return;t.cols.push({k:'c'+Date.now().toString(36),l,t:'',h:false});touch(t,'Spalte hinzugefügt: '+l);o.remove();secMenu(id);render()};
+  q('#m-cols').onclick=e=>{const b=e.target.closest('[data-cx]');if(b&&confirm('Spalte entfernen? Die Daten bleiben unsichtbar in der Datei.')){t.cols.splice(b.dataset.cx,1);touch(t,'Spalte entfernt');o.remove();secMenu(id);render()}};
+  q('#m-csv').onclick=()=>{const cs=real,e=v=>'"'+String(v??'').replace(/"/g,'""')+'"';dlText(new Blob(['\ufeff'+[cs.map(c=>e(c.l)).join(';'),...t.rows.map(r=>cs.map(c=>e(r[c.k])).join(';'))].join('\r\n')],{type:'text/csv'}),t.id+'.csv')};
+  q('#m-imp').onclick=()=>{const p=overlay(`<h2>Aus Excel einfügen</h2><p class="none">Zellen in Excel markieren, kopieren und hier einfügen. Spaltenreihenfolge: ${real.map(c=>esc(c.l)).join(' | ')}</p><textarea class="f" id="ix" rows="10"></textarea><label><input type="checkbox" id="ih" checked> Erste Zeile ist eine Kopfzeile</label><label><input type="radio" name="im" value="add" checked> Zeilen anhängen</label><label><input type="radio" name="im" value="rep"> Alle bisherigen Zeilen ersetzen</label><p><button class="btn" id="iok">Einfügen</button> <button class="btn" id="ic2">Abbrechen</button></p>`);
+    p.querySelector('#ic2').onclick=()=>p.remove();
+    p.querySelector('#iok').onclick=()=>{let L=p.querySelector('#ix').value.split(/\r?\n/).filter(x=>x.trim());if(p.querySelector('#ih').checked)L.shift();
+      const rows=L.map(l=>{const c=l.split('\t');return Object.fromEntries(real.map((k,i)=>[k.k,(c[i]||'').trim()]))});
+      if(!rows.length)return alert('Keine Zeilen erkannt.');
+      if(p.querySelector('[name=im]:checked').value==='rep'){if(!confirm('Alle bisherigen Zeilen ersetzen?'))return;t.rows=rows}else t.rows.push(...rows);
+      touch(t,rows.length+' Zeilen aus Excel eingefügt');p.remove();o.remove();render()}};
+  q('#m-ok').onclick=()=>{t.src=q('#m-src').value;t.srcl=q('#m-srcl').value;const ic=q('#m-ic').value.trim();if(ic||symb)t.icon=ic||t.icon;t.nofilter=!q('#m-nf').checked;t.fcol=q('#m-fc').value;
+    o.querySelectorAll('[data-cl]').forEach(i=>t.cols[i.dataset.cl].l=i.value);o.querySelectorAll('[data-ch]').forEach(i=>t.cols[i.dataset.ch].h=!i.checked);
+    touch(t,'Bereich angepasst');o.remove();render()}}
+function newsEditor(){
+  const items=NEWSALL.map(n=>({...n}));
+  const o=overlay(`<h2>Tageshinweise bearbeiten</h2><p class="none">Ein Hinweis pro Zeile. „wichtig“ = orange und auf allen Seiten sichtbar. „gültig bis“ ist optional; danach verschwindet der Hinweis automatisch. „Speichern“ überschreibt neuigkeiten.js im Intranet-Ordner.</p><div id="nl"></div><p><button class="btn" id="na">+ Hinweis hinzufügen</button></p><p><button class="btn" id="ns">Speichern</button> <button class="btn" id="nc">Abbrechen</button></p>`),L=o.querySelector('#nl');
+  const draw=()=>{L.innerHTML=items.map((x,i)=>`<div class="nr"><label><input type="checkbox" data-nw="${i}" ${x.w?'checked':''}> wichtig</label><input class="f" data-nt="${i}" value="${esc(x.t)}"><input type="date" class="f" style="max-width:150px" title="gültig bis" data-ne="${i}" value="${esc(x.exp||'')}"><button class="btn" data-nx="${i}">✕</button></div>`).join('')||'<p class="none">Keine Hinweise.</p>'};
+  draw();
+  L.oninput=e=>{const d=e.target.dataset;if(d.nt!==undefined)items[d.nt].t=e.target.value;if(d.nw!==undefined)items[d.nw].w=e.target.checked;if(d.ne!==undefined)items[d.ne].exp=e.target.value};
+  L.onclick=e=>{const b=e.target.closest('[data-nx]');if(b){items.splice(b.dataset.nx,1);draw()}};
+  o.querySelector('#na').onclick=()=>{items.push({w:false,t:'',exp:''});draw();L.querySelector('[data-nt="'+(items.length-1)+'"]').focus()};
+  o.querySelector('#nc').onclick=()=>o.remove();
+  o.querySelector('#ns').onclick=async()=>{
+    const clean=x=>x.replace(/`/g,"'").replace(/\$\{/g,'$ {').replace(/\\/g,'/').trim();
+    const body=items.filter(x=>x.t.trim()).map(x=>(x.w?'! ':'')+clean(x.t)+(x.exp?' | bis '+x.exp:'')).join('\n');
+    const txt='/* Tageshinweise: eine Zeile pro Hinweis zwischen den Zeichen ` (Backticks).\n   ! am Zeilenanfang = wichtiger Hinweis (orange). Zeilen mit # werden ignoriert.\n   " | bis JJJJ-MM-TT" am Zeilenende = Hinweis verschwindet nach diesem Datum.\n   Am einfachsten über die Seite bearbeiten: Übersicht > Hinweise bearbeiten. */\nwindow.PI_NEWS = `\n'+body+'\n`;\n';
+    let ok=false;
+    if(FSA){try{await writeFile(await getRoot(),'neuigkeiten.js',txt);ok=true}catch(e){if(e.name==='AbortError')return}}
+    if(!ok){dlText(new Blob([txt],{type:'text/javascript'}),'neuigkeiten.js');alert('Dieser Browser kann nicht direkt speichern. neuigkeiten.js wurde heruntergeladen. Bitte im Intranet-Ordner veroeffentlichen.bat doppelklicken.')}
+    window.PI_NEWS=body;parseNews(body);o.remove();render();if(ok)toast('Hinweise gespeichert.')}}
+const nl2=s=>esc(s).replace(/\n/g,'<br>');
+async function protoForm(){
+  if(!await needEdit())return;
+  const o=overlay(`<h2>Neues Besprechungsprotokoll</h2><p class="none">Bitte keine Patientennamen eintragen.</p><label>Datum</label><input type="date" class="f" id="pd" value="${today()}" style="max-width:200px"><label>Thema</label><input class="f" id="pt"><label>Teilnehmende</label><input class="f" id="pp"><label>Besprochene Punkte</label><textarea class="f" id="pb" rows="5"></textarea><label>Beschlüsse</label><textarea class="f" id="pe" rows="3"></textarea><label>To-dos (pro Zeile: Wer – Was – bis wann)</label><textarea class="f" id="po" rows="3"></textarea><p><button class="btn" id="ps">Als Word-Datei speichern und eintragen</button> <button class="btn" id="pc">Abbrechen</button></p>`);
+  o.querySelector('#pc').onclick=()=>o.remove();
+  o.querySelector('#ps').onclick=async()=>{
+    const v=i=>o.querySelector('#'+i).value.trim(),d=v('pd')||today(),t=v('pt')||'Besprechung';
+    const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>Protokoll</title><style>body{font-family:Calibri,Arial;font-size:11pt}h1{font-size:16pt}h3{font-size:12pt;margin-bottom:2pt}</style></head><body><h1>Besprechungsprotokoll: ${esc(t)}</h1><p>Datum: ${dt(new Date(d))}<br>Teilnehmende: ${esc(v('pp'))}</p><h3>Besprochene Punkte</h3><p>${nl2(v('pb'))}</p><h3>Beschlüsse</h3><p>${nl2(v('pe'))}</p><h3>To-dos (Wer – Was – bis wann)</h3><p>${nl2(v('po'))}</p></body></html>`;
+    try{const path=await saveToDocs(new Blob(['\ufeff'+html],{type:'application/msword'}),'besprechungen','Protokoll_'+d+'_'+t.replace(/[^\wäöüÄÖÜß-]+/g,'_').slice(0,40)+'.doc');
+      const s=CFG.tabs.find(x=>x.id==='besprechung');s.rows.unshift({datum:d,thema:t,beschluss:v('pe'),wer:'',datei:path});touch(s,'Protokoll angelegt: '+t);o.remove();render();toast('Protokoll gespeichert. Zum Veröffentlichen der Liste: Inhalte pflegen > Veröffentlichen.')}
+    catch(e){}}}
+async function protoUpload(files){
+  if(!files.length||!await needEdit())return;
+  const s=CFG.tabs.find(x=>x.id==='besprechung');
+  try{for(const f of files){const path=await saveToDocs(f,'besprechungen');s.rows.unshift({datum:today(),thema:f.name.replace(/\.\w+$/,'').replace(/_/g,' '),beschluss:'',wer:'',datei:path})}}catch(e){}
+  touch(s,files.length+' Protokoll(e) hochgeladen');render();toast('Protokoll hochgeladen. Zum Veröffentlichen der Liste: Inhalte pflegen > Veröffentlichen.')}
+
+/* ----- Arbeitsanweisungen und Checklisten ----- */
+let SOPOPEN='';const CHK={};
+const sopText=i=>[i.title,i.kat,i.zweck,i.verantw,...(i.schritte||[]).map(s=>(s.t||'')+' '+(s.warn||'')),...(i.check||[]),(i.anhaenge||[]).map(a=>a.name).join(' '),i._q||''].join(' ').toLowerCase();
+const sopHits=t=>(t.items||[]).filter(i=>!Q||sopText(i).includes(Q));
+const lnk=(n,l)=>!l?esc(n||''):/^https?:/i.test(l)?`<a href="${esc(l)}" target="_blank" rel="noopener">${esc(n||l)}</a>`:`<a href="${esc(encodeURI(l))}" target="_blank">${esc(n||l.split('/').pop())}</a>`;
+function sopBody(t){
+  const f=fsOf(t),q=f.q.toLowerCase(),items=(t.items||[]).filter(i=>(!q||sopText(i).includes(q))&&(!f.c||i.kat===f.c));
+  if(!(t.items||[]).length)return'<p class="none">Noch keine Anweisungen. Im Bearbeitungsmodus mit „+ Neue Anweisung“ anlegen.</p>';
+  if(!items.length)return'<p class="none">Keine Treffer.</p>';
+  const G={};items.forEach(i=>(G[i.kat||'Ohne Kategorie']??=[]).push(i));
+  return Object.keys(G).sort().map(g=>`<details open><summary><b>${esc(g)}</b> <span class="none">(${G[g].length})</span></summary>${G[g].map(i=>{const od=i.pruefung&&i.pruefung<today();return`<button class="sopr" data-sop="${i.id}" data-sopt="${t.id}"><b>${esc(i.title)}</b>${(i.check||[]).length?'<span class="tag">Checkliste</span>':''}${i.status&&i.status!=='Freigegeben'?`<span class="tag">${esc(i.status)}</span>`:''}<span class="none">${i.version?'Version '+esc(i.version):''}</span><span class="${od?'od':'none'}">${i.pruefung?'Prüfung '+dt(new Date(i.pruefung))+(od?' (überfällig)':''):''}</span></button>`}).join('')}</details>`).join('')}
+function sopList(t){
+  return`<div class="hd2"><h2>${esc(t.title)}</h2><span>Stand ${dt(new Date(t.upd))} · ${(t.items||[]).length} Anweisungen</span><span class="sp"></span>${EDIT?`<button class="btn" data-sopnew="${t.id}">+ Neue Anweisung</button>`:''}</div>${t.note?`<p class="note">${esc(t.note)}</p>`:''}${fbar(t)}<div id="tb-${t.id}">${sopBody(t)}</div>`}
+function sopDetail(t,i){
+  const ck=CHK[i.id]||(CHK[i.id]=new Set()),meta=[i.kat,i.version&&'Version '+i.version,i.status,i.gueltig&&'gültig ab '+dt(new Date(i.gueltig)),i.pruefung&&'nächste Prüfung '+dt(new Date(i.pruefung)),i.verantw&&'Verantwortlich: '+i.verantw].filter(Boolean).map(esc).join(' · ');
+  return`<div class="hd2"><button class="btn" data-sopback="1">← Zurück zur Liste</button><span class="sp"></span><button class="btn" data-print="1">Drucken</button>${EDIT?`<button class="btn" data-sopedit="${t.id}|${i.id}">✎ Bearbeiten</button>`:''}</div>
+<h2>${esc(i.title)}</h2><p class="none">${meta}</p>${i.status==='Entwurf'?'<p class="note">Entwurf: noch nicht freigegeben. Inhalt und Fristen vor Gebrauch prüfen.</p>':''}${i.zweck?`<p>${nl2(i.zweck)}</p>`:''}
+${(i.schritte||[]).length?`<h3>Schritte</h3><ol class="steps">${i.schritte.map(s=>`<li><div>${nl2(s.t||'')}</div>${s.warn?`<div class="nw w">${ico('w')}<span>${esc(s.warn)}</span></div>`:''}${s.bild?`<a href="${esc(encodeURI(s.bild))}" target="_blank"><img class="simg" src="${esc(encodeURI(s.bild))}" alt=""></a>`:''}</li>`).join('')}</ol>`:''}
+${(i.check||[]).length?`<h3>Checkliste</h3>${i.intervall?`<p class="none">Intervall: ${esc(i.intervall)}</p>`:''}<div class="chk">${i.check.map((c,k)=>`<label><input type="checkbox" data-ck="${i.id}|${k}" ${ck.has(k)?'checked':''}> ${esc(c)}</label>`).join('')}</div><p class="none">Datum / Kürzel: ______________ <button class="btn" data-ckreset="${i.id}">Zurücksetzen</button> <span>(Haken werden nicht gespeichert, nur zum Ausdrucken)</span></p>`:''}
+${(i.anhaenge||[]).length?`<h3>Dokumente und Links</h3>${i.anhaenge.map(a=>`<p>${lnk(a.name,a.l)}</p>`).join('')}`:''}${srcHtml(i._q,i._l)}`}
+function sopView(t){const i=SOPOPEN&&(t.items||[]).find(x=>x.id===SOPOPEN);return i?sopDetail(t,i):sopList(t)}
+function sopEditor(tid,id){
+  const t=CFG.tabs.find(x=>x.id===tid),old=id&&t.items.find(x=>x.id===id),isNew=!old;
+  const i=isNew?{id:'s'+Date.now().toString(36),title:'',kat:'',zweck:'',verantw:'',version:'1.0',status:'Entwurf',gueltig:today(),pruefung:'',intervall:'',schritte:[{t:'',warn:'',bild:''}],check:[],anhaenge:[],_q:'',_l:''}:JSON.parse(JSON.stringify(old));
+  i.schritte=i.schritte||[];i.anhaenge=i.anhaenge||[];i.check=i.check||[];
+  const cats=[...new Set(t.items.map(x=>x.kat).filter(Boolean))].sort();
+  const F=(k,l,ty)=>`<label>${l}</label><input class="f" ${ty?`type="${ty}"`:''} data-qf="${k}" value="${esc(i[k]||'')}">`;
+  const o=overlay(`<h2>${isNew?'Neue Anweisung':'Anweisung bearbeiten'}</h2>${F('title','Titel')}
+<label>Kategorie</label><input class="f" list="qk" data-qf="kat" value="${esc(i.kat)}"><datalist id="qk">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist>
+<div class="fbar" style="margin-top:8px"><div><label>Status</label><select class="f" data-qf="status">${['Entwurf','Freigegeben'].map(s=>`<option ${i.status===s?'selected':''}>${s}</option>`).join('')}</select></div><div>${F('version','Version')}</div><div>${F('gueltig','Gültig ab','date')}</div><div>${F('pruefung','Nächste Prüfung','date')}</div></div>
+${F('verantw','Verantwortlich')}${F('intervall','Intervall der Checkliste (z. B. täglich, jährlich)')}
+<label>Zweck / Geltungsbereich</label><textarea class="f" rows="3" data-qf="zweck">${esc(i.zweck)}</textarea>
+<h3>Schritte</h3><div id="qs"></div><p><button class="btn" id="qsa">+ Schritt</button></p>
+<h3>Checkliste (ein Punkt pro Zeile)</h3><textarea class="f" rows="5" id="qck">${esc(i.check.join('\n'))}</textarea>
+<h3>Dokumente und Links</h3><div id="qa"></div><p><button class="btn" id="qaa">+ Anhang</button></p>
+<h3>Quelle</h3>${F('_q','Quelle (Text)')}${F('_l','Quelle: Datei oder Link')}
+<p><button class="btn" id="qsv">Speichern</button> ${isNew?'':'<button class="btn" id="qdl">Löschen</button> '}<button class="btn" id="qcn">Abbrechen</button></p>`);
+  const S=o.querySelector('#qs'),A=o.querySelector('#qa');
+  const dS=()=>{S.innerHTML=i.schritte.map((s,k)=>`<div class="nr" style="align-items:flex-start;flex-wrap:wrap"><b>${k+1}.</b><textarea class="f" rows="2" style="flex:1;min-width:240px" data-qt="${k}" placeholder="Was ist zu tun?">${esc(s.t)}</textarea><input class="f" style="flex:1;min-width:200px" data-qw="${k}" placeholder="Warnhinweis (optional)" value="${esc(s.warn||'')}"><label class="btn">${s.bild?'Bild ändern':'Bild'}<input type="file" accept="image/*" hidden data-qb="${k}"></label>${s.bild?`<span class="none">${esc(s.bild.split('/').pop())} <button class="btn" data-qbx="${k}">✕</button></span>`:''}<button class="btn" data-qu="${k}">▲</button><button class="btn" data-qd="${k}">▼</button><button class="btn" data-qx="${k}">✕</button></div>`).join('')};
+  const dA=()=>{A.innerHTML=i.anhaenge.map((a,k)=>`<div class="nr"><input class="f" data-qan="${k}" placeholder="Name" value="${esc(a.name||'')}"><input class="f" data-qal="${k}" placeholder="Datei oder Link" value="${esc(a.l||'')}"><label class="btn">Datei<input type="file" hidden data-qaf="${k}"></label><button class="btn" data-qax="${k}">✕</button></div>`).join('')};
+  dS();dA();
+  S.oninput=e=>{const d=e.target.dataset;if(d.qt!==undefined)i.schritte[d.qt].t=e.target.value;if(d.qw!==undefined)i.schritte[d.qw].warn=e.target.value};
+  S.onclick=e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset,s=i.schritte;
+    if(d.qx!==undefined)s.splice(d.qx,1);else if(d.qu!==undefined){const k=+d.qu;if(k>0)[s[k-1],s[k]]=[s[k],s[k-1]]}else if(d.qd!==undefined){const k=+d.qd;if(k<s.length-1)[s[k+1],s[k]]=[s[k],s[k+1]]}else if(d.qbx!==undefined)s[d.qbx].bild='';else return;dS()};
+  S.onchange=async e=>{const k=e.target.dataset.qb;if(k===undefined||!e.target.files[0])return;try{i.schritte[k].bild=await saveToDocs(e.target.files[0],'QM/Bilder');dS()}catch(x){}};
+  A.oninput=e=>{const d=e.target.dataset;if(d.qan!==undefined)i.anhaenge[d.qan].name=e.target.value;if(d.qal!==undefined)i.anhaenge[d.qal].l=e.target.value};
+  A.onclick=e=>{const b=e.target.closest('[data-qax]');if(b){i.anhaenge.splice(b.dataset.qax,1);dA()}};
+  A.onchange=async e=>{const k=e.target.dataset.qaf;if(k===undefined||!e.target.files[0])return;try{const f=e.target.files[0];i.anhaenge[k].l=await saveToDocs(f,'QM');if(!i.anhaenge[k].name)i.anhaenge[k].name=f.name.replace(/\.\w+$/,'').replace(/_/g,' ');dA()}catch(x){}};
+  o.querySelector('#qsa').onclick=()=>{i.schritte.push({t:'',warn:'',bild:''});dS()};
+  o.querySelector('#qaa').onclick=()=>{i.anhaenge.push({name:'',l:''});dA()};
+  o.querySelector('#qcn').onclick=()=>o.remove();
+  if(!isNew)o.querySelector('#qdl').onclick=()=>{if(confirm('Anweisung löschen?')){t.items=t.items.filter(x=>x.id!==i.id);touch(t,'Anweisung gelöscht: '+i.title);o.remove();SOPOPEN='';render()}};
+  o.querySelector('#qsv').onclick=()=>{o.querySelectorAll('[data-qf]').forEach(el=>{i[el.dataset.qf]=el.value.trim()});
+    if(!i.title)return alert('Bitte einen Titel eingeben.');
+    i.check=o.querySelector('#qck').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);i.schritte=i.schritte.filter(s=>(s.t||'').trim()||s.bild);i.anhaenge=i.anhaenge.filter(a=>a.l);
+    if(isNew)t.items.push(i);else t.items[t.items.findIndex(x=>x.id===i.id)]=i;
+    touch(t,(isNew?'Anweisung angelegt: ':'Anweisung geändert: ')+i.title);o.remove();SOPOPEN=i.id;render()}}
+
+/* ----- Ereignisse ----- */
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2600)}
+function copy(t){const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()};
+  (navigator.clipboard&&window.isSecureContext?navigator.clipboard.writeText(t).catch(fb):Promise.resolve(fb())).then(()=>toast('Kopiert: '+t))}
+document.addEventListener('click',e=>{
+  const g=s=>e.target.closest(s);let x;
+  if(x=g('.cp'))return copy(x.dataset.c);
+  if(g('#reloadB'))return location.reload();
+  if(g('#newsBtn'))return newsEditor();
+  if(g('[data-proto]'))return protoForm();
+  if(g('#navT')){document.body.classList.toggle('navc');ls.set('pi_nav',document.body.classList.contains('navc')?'1':'');return}
+  if(x=g('[data-fz]')){const n=Math.max(-3,Math.min(5,(+ls.get('pi_fz')||0)+(+x.dataset.fz)));ls.set('pi_fz',n);document.body.style.zoom=1+n*0.08;return}
+  if(g('[data-print]'))return window.print();
+  if(x=g('[data-sop]')){const t=CFG.tabs.find(y=>y.id===x.dataset.sopt)||CFG.tabs.find(y=>y.type==='sop');TAB=t.id;SOPOPEN=x.dataset.sop;if(Q){Q='';$('#q').value=''}render();return scrollTo(0,0)}
+  if(g('[data-sopback]')){SOPOPEN='';render();return scrollTo(0,0)}
+  if(x=g('[data-ckreset]')){CHK[x.dataset.ckreset]=new Set();return render()}
+  if(x=g('[data-j]')){const el=document.getElementById(x.dataset.j);return el&&el.scrollIntoView({behavior:'smooth'})}
+  if(x=g('[data-t]')){TAB=x.dataset.t;SOPOPEN='';if(Q&&(x.dataset.clr||g('aside'))){Q='';$('#q').value=''}USE[TAB]=(USE[TAB]||0)+1;ls.set('pi_use',JSON.stringify(USE));render();return scrollTo(0,0)}
+  if(g('#editOn'))return startEdit();
+  if(g('#editOff')){if(confirm('Bearbeitungsmodus beenden? Ein nicht veröffentlichter Entwurf wird verworfen.')){ls.del('pi_edit');ls.del('pi_draft');location.reload()}return}
+  if(!EDIT)return;
+  if(x=g('[data-sopnew]'))return sopEditor(x.dataset.sopnew,'');
+  if(x=g('[data-sopedit]')){const[a,b]=x.dataset.sopedit.split('|');return sopEditor(a,b)}
+  if(x=g('[data-pen]')){const[a,b]=x.dataset.pen.split('|');return rowDrawer(a,+b)}
+  if(x=g('[data-menu]'))return secMenu(x.dataset.menu);
+  if(g('#rootB')){getRoot(true).then(()=>{toast('Ordner verbunden.');render()}).catch(()=>{});return}
+  if(g('#verB'))return versionsDlg();
+  if(g('#moveB'))return moveDocs();
+  if(g('#pinSet')){const v=$('#pinIn').value.trim();if(!v)return;CFG.pinHash=hashPin(v);logSave('Einstellungen','PIN geändert');return toast('PIN gespeichert. Gilt nach dem Veröffentlichen.')}
+  if(g('#pinDel')){delete CFG.pinHash;logSave('Einstellungen','PIN entfernt');return toast('PIN entfernt. Gilt nach dem Veröffentlichen.')}
+  if(x=g('[data-icx]')){CFG.tabs[x.dataset.icx].icon='';logSave(CFG.tabs[x.dataset.icx].title,'Logo entfernt');return render()}
+  if(g('#logoX')){CFG.logo='';logSave('Einstellungen','Praxis-Logo entfernt');return render()}
+  if(g('#pub'))return publish();
+  if(g('#dl'))return download();
+  if(g('#discard')){if(confirm('Entwurf verwerfen und zentrale Version laden?')){ls.del('pi_draft');CFG=clone(CENTRAL);CFG.log=CFG.log||[];DBASE=CENTRAL.version;persist();render()}return}
+  if(x=g('[data-edit]')){SEC=x.dataset.edit;TAB='settings';render();return scrollTo(0,0)}
+  if(x=g('[data-mv]')){const[i,d]=x.dataset.mv.split(',').map(Number),t=CFG.tabs,j=i+d;if(j>=0&&j<t.length){[t[i],t[j]]=[t[j],t[i]];logSave('Reiter','Reihenfolge geändert');render()}return}
+  if(x=g('[data-del]')){const t=CFG.tabs[x.dataset.del];if(confirm('Reiter „'+t.title+'“ samt Inhalt löschen?')){CFG.tabs.splice(x.dataset.del,1);logSave(t.title,'Reiter gelöscht');render()}return}
+  if(x=g('[data-rd]')){const s=curSec();if(confirm('Zeile löschen?')){s.rows.splice(x.dataset.rd,1);touch(s,'Zeile gelöscht');render()}return}
+  if(g('#addRow')){const s=curSec();s.rows.push(Object.fromEntries(s.cols.filter(c=>c.t!=='dose').map(c=>[c.k,c.t==='date'?today():''])));touch(s,'Zeile hinzugefügt');return render()}
+  if(g('#newTab')){const n=prompt('Name des neuen Reiters:');if(!n)return;const c=(prompt('Spalten, durch Komma getrennt:','Thema, Beschreibung')||'Thema').split(',');
+    CFG.tabs.push({id:'x'+Date.now(),title:n,grp:'Praxis',upd:today(),rows:[],cols:c.map((l,i)=>({k:'c'+i,l:l.trim(),t:/link|datei|nummer/i.test(l)?'auto':/datum|stand/i.test(l)?'date':'',h:false}))});
+    logSave(n,'Reiter angelegt');return render()}});
+document.addEventListener('change',async e=>{
+  const d=e.target.dataset,v=e.target.value;
+  if(d.protoup!==undefined){const f=[...e.target.files];e.target.value='';return protoUpload(f)}
+  if(d.ck){const[a,b]=d.ck.split('|');(CHK[a]||(CHK[a]=new Set()))[e.target.checked?'add':'delete'](+b);return}
+  if(d.fc){const t=CFG.tabs.find(x=>x.id===d.fc);fsOf(t).c=v;$('#tb-'+t.id).innerHTML=body(t,!!t.host);return}
+  if(!EDIT)return;
+  if(d.ui){CFG.ui=CFG.ui||{};CFG.ui[d.ui]=e.target.checked;logSave('Einstellungen','Filter '+(e.target.checked?'an':'aus'));return render()}
+  if(d.e){const[i,k]=d.e.split('|'),s=curSec();s.rows[i][k]=v;return touch(s,'Eintrag geändert')}
+  if(d.ts){const s=curSec();s[d.ts]=v;return touch(s,'Quelle des Bereichs geändert')}
+  if(d.pf){const f=e.target.files[0];if(!f)return;const[i,k]=d.pf.split('|'),s=curSec();try{s.rows[i][k]=await saveToDocs(f,'')}catch(x){return}touch(s,'Datei verknüpft: '+f.name);return render()}
+  if(d.up){const t=CFG.tabs.find(x=>x.id===d.up),c=t.cols.filter(c=>c.t!=='dose');let n=0;
+    const sub=t.groupBy?await pickFolder(t):'';if(sub===null){e.target.value='';return}
+    try{for(const f of e.target.files){const p=await saveToDocs(f,sub);t.rows.push(Object.fromEntries(c.map((c,i)=>[c.k,c.k===t.groupBy?sub:i===0?f.name.replace(/\.\w+$/,'').replace(/_/g,' '):c.t==='auto'?p:c.t==='date'?today():''])));n++}}catch(x){}
+    if(n){touch(t,n+' Datei(en) hinzugefügt');render()}return}
+  if(d.icf){const f=e.target.files[0];if(!f)return;const r=await resize(f,96);if(r){CFG.tabs[d.icf].icon=r;logSave(CFG.tabs[d.icf].title,'Logo geändert');render()}return}
+  if(d.logo){const f=e.target.files[0];if(!f)return;const r=await resize(f,260);if(r){CFG.logo=r;logSave('Einstellungen','Praxis-Logo geändert');render()}return}
+  if(d.ic!==undefined){CFG.tabs[d.ic].icon=v.trim();logSave(CFG.tabs[d.ic].title,'Logo geändert');return render()}
+  if(d.ti){CFG.tabs[d.ti].title=v;logSave('Reiter','Umbenannt: '+v);return render()}
+  if(d.gr){CFG.tabs[d.gr].grp=v;logSave(CFG.tabs[d.gr].title,'Gruppe: '+v);return render()}
+  if(d.hid){CFG.tabs[d.hid].hidden=!e.target.checked;logSave(CFG.tabs[d.hid].title,e.target.checked?'eingeblendet':'ausgeblendet');return render()}
+  if(d.st){CFG.start=d.st;return logSave('Einstellungen','Startseite geändert')}
+  if(e.target.id==='secSel'){SEC=v;return render()}});
+$('#q').addEventListener('input',e=>{Q=e.target.value.trim().toLowerCase();render()});
+document.addEventListener('input',e=>{const d=e.target.dataset;if(d.fq){const t=CFG.tabs.find(x=>x.id===d.fq);fsOf(t).q=e.target.value;$('#tb-'+t.id).innerHTML=body(t,!!t.host)}});
+document.addEventListener('keydown',e=>{
+  const q=$('#q'),typing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();q.focus();q.select()}
+  else if(e.key==='/'&&!typing){e.preventDefault();q.focus()}
+  else if(e.key==='Escape'&&document.activeElement===q){q.value='';Q='';render();q.blur()}});
+function tick(){const n=new Date();$('#clock').textContent=n.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})+', '+n.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' Uhr'}
+
+(function boot(){
+  CENTRAL=window.PI_CONFIG;
+  if(!CENTRAL||!CENTRAL.tabs){$('#view').innerHTML='<h2>config.js nicht gefunden</h2><p class="none">Die Datei config.js muss im selben Ordner wie index.html liegen und unverändert beginnen mit „window.PI_CONFIG =“.</p>';return}
+  CFG=clone(CENTRAL);CFG.log=CFG.log||[];DBASE=CENTRAL.version;
+  EDIT=ls.get('pi_edit')==='1';
+  if(EDIT){try{const d=JSON.parse(ls.get('pi_draft'));if(d&&d.cfg){CFG=d.cfg;CFG.log=CFG.log||[];DBASE=d.base}}catch(e){}}
+  TAB=CFG.start||'start';SEC='medis';parseNews(window.PI_NEWS);
+  setSync();tick();setInterval(tick,30000);if(ls.get('pi_nav'))document.body.classList.add('navc');const fz=+ls.get('pi_fz')||0;if(fz)document.body.style.zoom=1+fz*0.08;render();
+  setInterval(loadNews,300000);setInterval(checkUpdate,300000);
+})();
+</script>
+</body>
+</html>

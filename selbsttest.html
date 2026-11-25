@@ -1,0 +1,23 @@
+<!DOCTYPE html><meta charset="utf-8"><title>Selbsttest Praxis-Intranet</title>
+<body style="font:16px Segoe UI,Arial;max-width:780px;margin:30px auto"><h2>Selbsttest Praxis-Intranet</h2>
+<p>Diese Seite im Intranet-Ordner per Doppelklick öffnen, so wie später die index.html. Am besten an zwei PCs und mit jedem Browser (Edge, Chrome, Firefox).</p><ul id="r"></ul><div id="e" style="background:#fff3dc;border:1px solid #eeb25a;padding:10px 14px;border-radius:8px;display:none"></div>
+<p><button id="w" style="font:inherit;padding:6px 14px">Schreibtest: Intranet-Ordner wählen</button> <span id="wr"></span></p>
+<script src="config.js"></script><script src="neuigkeiten.js"></script>
+<script>
+const r=document.getElementById("r"),L=(ok,t)=>{const li=document.createElement("li");li.textContent=(ok?"OK: ":"PROBLEM: ")+t;li.style.color=ok?"#0a6b2f":"#b00020";r.appendChild(li)};
+const ua=navigator.userAgent,br=/Edg\//.test(ua)?"Edge":/Firefox\//.test(ua)?"Firefox":/Chrome\//.test(ua)?"Chrome":/Safari\//.test(ua)?"Safari":"unbekannt";
+const fsa=!!window.showDirectoryPicker;
+L(typeof PI_CONFIG!=="undefined","config.js wird geladen"+(typeof PI_CONFIG!=="undefined"?" (Stand "+PI_CONFIG.published+")":""));
+L(typeof PI_NEWS==="string","neuigkeiten.js wird geladen");
+L(true,"Browser: "+br);
+L(location.protocol==="file:","Seite geöffnet über: "+location.protocol+" ("+decodeURIComponent(location.href).slice(0,70)+")");
+L(window.isSecureContext,"Sicherer Kontext (nötig zum direkten Speichern): "+window.isSecureContext);
+L(fsa,"Ordner-Zugriff (showDirectoryPicker) verfügbar: "+fsa);
+L(!!window.showSaveFilePicker,"Datei-Speichern-Dialog (showSaveFilePicker) verfügbar: "+!!window.showSaveFilePicker);
+if(!fsa){const e=document.getElementById("e");e.style.display="block";
+ e.innerHTML="<b>Warum geht das direkte Speichern nicht?</b><br>"+(br==="Firefox"||br==="Safari"?"Dieser Browser unterstützt den Ordner-Zugriff nicht. Zum Bearbeiten und Veröffentlichen bitte Edge oder Chrome verwenden. Zum Lesen reicht jeder Browser.":location.protocol!=="file:"&&!window.isSecureContext?"Die Seite wurde über http:// geöffnet. Dort sperrt der Browser den Ordner-Zugriff. Bitte index.html direkt aus dem (zugeordneten) Laufwerk öffnen.":"Der Browser bietet die Funktion hier nicht an. Bitte Edge oder Chrome verwenden und die Datei direkt aus dem Laufwerk öffnen.")+"<br><b>Ersatz ohne Installation:</b> Der Browser lädt die Datei herunter; dann im Intranet-Ordner <i>veroeffentlichen.bat</i> doppelklicken."}
+document.getElementById("w").onclick=async()=>{const o=document.getElementById("wr");
+ if(!fsa){o.textContent="Nicht möglich in diesem Browser.";return}
+ try{const d=await showDirectoryPicker({mode:"readwrite"});await d.getFileHandle("index.html");const a=await d.getDirectoryHandle("archiv",{create:true});const f=await a.getFileHandle("schreibtest.tmp",{create:true});const w=await f.createWritable();await w.write("test");await w.close();await a.removeEntry("schreibtest.tmp");o.textContent="OK: Schreiben im Ordner funktioniert.";o.style.color="#0a6b2f"}
+ catch(e){o.textContent="PROBLEM: "+(e.name||e)+" – richtigen Ordner (mit index.html) gewählt und Schreiben erlaubt?";o.style.color="#b00020"}};
+</script>

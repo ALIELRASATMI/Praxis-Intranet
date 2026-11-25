@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8"><title>Tageshinweise bearbeiten</title>
+<style>
+body{font:16px/1.5 "Segoe UI",Arial,sans-serif;background:#f2f5f7;color:#1c2a33;margin:0}
+main{max-width:820px;margin:30px auto;background:#fff;border:1px solid #dbe4ea;border-radius:10px;padding:24px}
+h1{font-size:20px;margin:0 0 6px;color:#0a566b}ol{margin:8px 0 18px;padding-left:22px;color:#587080}
+.r{display:flex;gap:10px;align-items:center;margin-bottom:8px}.r input[type=text]{flex:1;font:inherit;padding:8px 10px;border:1px solid #b9c8d1;border-radius:6px}
+.r label{white-space:nowrap;color:#9a4a05;font-weight:600}
+button{font:inherit;font-weight:600;color:#fff;background:#0e7490;border:0;border-radius:6px;padding:8px 16px;cursor:pointer}
+button.l{background:#fff;color:#0a566b;border:1px solid #b9c8d1;padding:6px 12px}
+.m{color:#587080;font-size:14px;margin-top:14px}.ok{color:#0a6b2f;font-weight:600}
+</style></head><body><main>
+<h1>Tageshinweise bearbeiten</h1>
+<ol><li>Hinweise unten ändern, hinzufügen oder löschen. Häkchen „wichtig“ = orange auf allen Seiten. Das Datum „gültig bis“ ist optional.</li>
+<li>Auf „Speichern“ klicken.</li>
+<li>Im Fenster die Datei <b>neuigkeiten.js</b> im Netzwerkordner auswählen und „Speichern“ bestätigen.</li>
+<li>Fertig: an den PCs erscheint der Hinweis nach Neuladen (F5), spätestens nach 5 Minuten.</li></ol>
+<div id="list"></div>
+<p><button class="l" id="add">+ Hinweis hinzufügen</button></p>
+<p><button id="save">Speichern</button> <span id="msg" class="ok"></span></p>
+<p class="m">Funktioniert in Edge und Chrome. Wenn kein Speichern-Fenster erscheint, wird die Datei heruntergeladen: dann im Netzwerkordner die alte neuigkeiten.js ersetzen.</p>
+</main>
+<script src="neuigkeiten.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const items=(typeof PI_NEWS==="string"?PI_NEWS:"").split(/\r?\n/).map(x=>x.trim()).filter(x=>x&&!x.startsWith("#")).map(x=>{let w=false,t=x,exp="";if(t.startsWith("!")){w=true;t=t.slice(1).trim()}const m=t.match(/\s*\|\s*bis\s+(\d{4}-\d{2}-\d{2})\s*$/);if(m){exp=m[1];t=t.slice(0,m.index).trim()}return{w,t,exp}});
+const esc=s=>s.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+function draw(){$("#list").innerHTML=items.map((x,i)=>`<div class="r"><label><input type="checkbox" data-w="${i}" ${x.w?"checked":""}> wichtig</label><input type="text" data-t="${i}" value="${esc(x.t)}" placeholder="Hinweis eingeben"><input type="date" data-e="${i}" value="${x.exp||''}" title="gültig bis (optional)"><button class="l" data-x="${i}">Löschen</button></div>`).join("")||"<p>Keine Hinweise.</p>"}
+draw();
+$("#list").oninput=e=>{const d=e.target.dataset;if(d.t!==undefined)items[d.t].t=e.target.value;if(d.w!==undefined)items[d.w].w=e.target.checked;if(d.e!==undefined)items[d.e].exp=e.target.value};
+$("#list").onclick=e=>{const b=e.target.closest("[data-x]");if(b){items.splice(b.dataset.x,1);draw()}};
+$("#add").onclick=()=>{items.push({w:false,t:""});draw();document.querySelector('[data-t="'+(items.length-1)+'"]').focus()};
+$("#save").onclick=async()=>{
+  const clean=x=>x.replace(/`/g,"'").replace(/\$\{/g,"$ {").replace(/\\/g,"/").trim();
+  const body=items.filter(x=>x.t.trim()).map(x=>(x.w?"! ":"")+clean(x.t)+(x.exp?" | bis "+x.exp:"")).join("\n");
+  const txt="/* Tageshinweise: eine Zeile pro Hinweis zwischen den Zeichen ` (Backticks).\n   ! am Zeilenanfang = wichtiger Hinweis (orange). Zeilen mit # werden ignoriert.\n   Am einfachsten über die Seite bearbeiten: Übersicht > Hinweise bearbeiten. */\nwindow.PI_NEWS = `\n"+body+"\n`;\n";
+  try{
+    if(window.showSaveFilePicker){const h=await showSaveFilePicker({suggestedName:"neuigkeiten.js",types:[{description:"neuigkeiten.js",accept:{"text/javascript":[".js"]}}]});const w=await h.createWritable();await w.write(txt);await w.close();$("#msg").textContent="Gespeichert in "+h.name+"."}
+    else throw 0;
+  }catch(e){if(e&&e.name==="AbortError")return;const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/javascript"}));a.download="neuigkeiten.js";a.click();$("#msg").textContent="Heruntergeladen: bitte im Netzwerkordner ersetzen."}
+};
+</script></body></html>
